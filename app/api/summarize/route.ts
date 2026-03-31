@@ -1,11 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import Groq from "groq-sdk";
-import { db } from "@/lib/firebase";
-import {
-  collection,
-  addDoc,
-  serverTimestamp,
-} from "firebase/firestore";
 
 export const runtime = "nodejs";
 
@@ -35,13 +29,6 @@ export async function POST(req: NextRequest) {
     });
 
     const text = completion.choices[0].message.content || "";
-
-    // async fire-and-forget save
-    addDoc(collection(db, "summaries"), {
-      note,
-      summary: text,
-      createdAt: serverTimestamp(),
-    }).catch(console.error);
 
     return NextResponse.json({ text });
   } catch (error: any) {
