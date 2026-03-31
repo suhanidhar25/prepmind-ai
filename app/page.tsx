@@ -96,7 +96,7 @@ export default function Home() {
           </div>
         </div>
 
-        <nav className="space-y-2 text-sm flex-1">
+        <nav className="space-y-2.2 text-sm flex-1">
           <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-linear-to-r from-blue-500 to-cyan-400 text-slate-950 font-semibold shadow-lg hover:shadow-xl transition-shadow">
             <LayoutDashboard size={18} /> Dashboard
           </button>
