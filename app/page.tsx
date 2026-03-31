@@ -1,16 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { db } from "@/lib/firebase";
 import {
   collection,
   addDoc,
-  getDocs,
-  query,
-  orderBy,
-  limit,
-  Timestamp,
 } from "firebase/firestore";
 import {
   Sparkles,
@@ -20,32 +15,10 @@ import {
   Send,
 } from "lucide-react";
 
-interface SummaryItem {
-  id: string;
-  note: string;
-  summary: string;
-  createdAt: Timestamp;
-}
-
 export default function Home() {
   const [note, setNote] = useState("");
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [recent, setRecent] = useState<SummaryItem[]>([]);
-
-  useEffect(() => {
-    const fetchRecent = async () => {
-      const q = query(
-        collection(db, "summaries"),
-        orderBy("createdAt", "desc"),
-        limit(5)
-      );
-      const snap = await getDocs(q);
-      setRecent(snap.docs.map((doc) => ({ id: doc.id, ...doc.data() } as SummaryItem)));
-    };
-
-    fetchRecent();
-  }, [output]);
 
   const handleGenerate = async () => {
     if (!note.trim() || loading) return;
@@ -96,7 +69,7 @@ export default function Home() {
           </div>
         </div>
 
-        <nav className="space-y-2.2 text-sm flex-1">
+        <nav className="space-y-2 text-sm flex-1">
           <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-linear-to-r from-blue-500 to-cyan-400 text-slate-950 font-semibold shadow-lg hover:shadow-xl transition-shadow">
             <LayoutDashboard size={18} /> Dashboard
           </button>
@@ -139,7 +112,7 @@ export default function Home() {
 
           {/* Workspace */}
           <div className="grid xl:grid-cols-3 gap-6">
-            <div className="xl:col-span-2 rounded-3xl border border-blue-200/20 bg-linear-to-br from-blue-950/50 to-slate-900/50 backdrop-blur-md p-8 shadow-xl">
+            <div className="xl:col-span-3 rounded-3xl border border-blue-200/20 bg-linear-to-br from-blue-950/50 to-slate-900/50 backdrop-blur-md p-8 shadow-xl">
               <div className="flex items-center gap-3 mb-5">
                 <div className="p-2 rounded-lg bg-blue-400/20">
                   <Sparkles size={20} className="text-blue-300" />
@@ -181,42 +154,6 @@ export default function Home() {
                     </span>
                   )}
                 </div>
-              </div>
-            </div>
-
-            {/* Knowledge Vault */}
-            <div className="rounded-3xl border border-blue-200/20 bg-linear-to-br from-blue-950/40 to-slate-900/40 backdrop-blur-md p-6 shadow-xl h-fit">
-              <div className="flex items-center justify-between mb-5">
-                <h3 className="text-xl font-bold">Knowledge Vault</h3>
-                <Link
-                  href="/history"
-                  className="text-xs text-zinc-400 hover:text-blue-300 font-medium transition-colors"
-                >
-                  View all
-                </Link>
-              </div>
-
-              <div className="space-y-3">
-                {recent.length === 0 ? (
-                  <p className="text-sm text-zinc-500 text-center py-8">
-                    No summaries yet. Create one to get started!
-                  </p>
-                ) : (
-                  recent.map((item) => (
-                    <div
-                      key={item.id}
-                      className="rounded-2xl border border-blue-200/20 bg-blue-900/30 p-4 hover:bg-blue-900/50 transition-colors cursor-pointer group"
-                    >
-                      <p className="text-sm line-clamp-4 text-zinc-300 group-hover:text-zinc-100 transition-colors">
-                        {item.summary}
-                      </p>
-                      <p className="text-xs text-zinc-500 mt-3">
-                        {item.createdAt?.toDate?.().toLocaleDateString() ??
-                          "Recently"}
-                      </p>
-                    </div>
-                  ))
-                )}
               </div>
             </div>
           </div>
