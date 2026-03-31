@@ -1,36 +1,126 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ✦ PrepMind — AI Study Workspace
 
-## Getting Started
+A premium **SaaS-style AI study dashboard** that transforms raw lecture notes into **structured summaries, key concepts, and viva-ready questions**.
 
-First, run the development server:
+Built with a **dark-blue glassmorphism interface**, PrepMind is designed as a modern AI productivity suite rather than a generic chat UI.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🚀 Features
+
+* ✨ **AI-powered note summarization**
+* 🧠 **Viva / interview question generation**
+* 📚 **Knowledge Vault history panel**
+* ☁️ **Firebase Firestore cloud persistence**
+* 📊 **Dashboard analytics cards**
+* 🎨 **Premium dark-blue glassmorphism UI**
+* ⚡ **Fast Groq API inference**
+* 🌐 **Vercel-ready deployment**
+
+---
+
+## 🛠️ Tech Stack
+
+* **Next.js** (App Router)
+* **Tailwind CSS**
+* **Groq API**
+* **Firebase Firestore**
+* **Lucide React**
+* **Vercel**
+
+---
+
+## 📸 Preview
+
+### Dashboard
+
+* Sidebar navigation
+* Study Canvas workspace
+* Knowledge Vault history
+* Live summary analytics
+
+### Workflow
+
+1. Paste class notes
+2. Click **Generate Summary**
+3. Get:
+
+   * concise summary
+   * important concepts
+   * viva-ready questions
+4. Saved automatically in **Knowledge Vault**
+
+---
+
+## ⚙️ Environment Variables
+
+Create a `.env.local` file in the project root:
+
+```env
+GROQ_API_KEY=your_groq_api_key
+
+NEXT_PUBLIC_FIREBASE_API_KEY=your_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_domain
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_bucket
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ▶️ Run Locally
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm install
+npm run dev
+```
 
-## Learn More
+Open:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+http://localhost:3000
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🌍 Deployment
 
-## Deploy on Vercel
+This project is optimized for **Vercel deployment**.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Push repo to GitHub
+2. Import project in Vercel
+3. Add environment variables
+4. Deploy 🚀
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🎯 Why I Built This
+
+As a **pre-final year BCA student**, I wanted to build something that combines:
+
+* strong **full-stack fundamentals**
+* **AI API integration**
+* **product dashboard design thinking**
+* deployable **startup-style SaaS UI**
+
+PrepMind is my attempt at building a **real-world AI productivity MVP in one day**.
+
+---
+
+## 🔮 Roadmap (V2)
+
+* 🔐 Authentication
+* 📄 PDF export
+* 🗂️ Folder-based note organization
+* 📈 Usage analytics
+* 🌙 Theme switcher
+* 👥 Team collaboration
+
+---
+
+## 👩‍💻 Author
+
+Built by **Suhani Dhar** ✨
+
+If you like this project, feel free to ⭐ the repo and connect on LinkedIn.
