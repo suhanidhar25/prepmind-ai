@@ -34,9 +34,9 @@ export default function Home() {
       });
 
       const data = await res.json();
+      
       if (!res.ok) {
         setOutput(data.error || "Failed to generate summary");
-        setLoading(false);
         return;
       }
 
@@ -48,7 +48,8 @@ export default function Home() {
         createdAt: new Date(),
       });
     } catch (error) {
-      setOutput("Something went wrong");
+      console.error("Error:", error);
+      setOutput("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
