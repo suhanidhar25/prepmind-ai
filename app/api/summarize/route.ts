@@ -1,60 +1,52 @@
 import { NextRequest, NextResponse } from "next/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import Groq from "groq-sdk";
+import { db } from "@/lib/firebase";
+import {
+  collection,
+  addDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 
-interface RequestBody {
-  note: string;
-}
+export const runtime = "nodejs";
 
-interface ErrorResponse {
-  error: string;
-}
-
-interface SuccessResponse {
-  text: string;
-}
-
-export async function POST(
-  req: NextRequest
-): Promise<NextResponse<SuccessResponse | ErrorResponse>> {
+export async function POST(req: NextRequest) {
   try {
-    const { note } = (await req.json()) as RequestBody;
+    const apiKey = process.env.GROQ_API_KEY;
 
-    if (!note || !note.trim()) {
-      return NextResponse.json(
-        { error: "No note provided" },
-        { status: 400 }
-      );
-    }
-
-    const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
       return NextResponse.json(
-        { error: "API key not configured" },
+        { error: "Groq API key not configured" },
         { status: 500 }
       );
     }
 
-    const genAI = new GoogleGenerativeAI(apiKey);
+    const { note } = await req.json();
 
-    const model = genAI.getGenerativeModel({
-      model: "gemini-2.0-flash",
+    const groq = new Groq({ apiKey });
+
+    const completion = await groq.chat.completions.create({
+      model: "llama-3.1-8b-instant",
+      messages: [
+        {
+          role: "user",
+          content: `Summarize this in bullet points and add 5 viva questions:\n${note}`,
+        },
+      ],
     });
 
-    const result = await model.generateContent(
-      `Summarize these notes in bullet points and add 5 viva questions:\n${note}`
-    );
+    const text = completion.choices[0].message.content || "";
 
-    const text = result.response.text();
+    await addDoc(collection(db, "summaries"), {
+      note,
+      summary: text,
+      createdAt: serverTimestamp(),
+    });
 
     return NextResponse.json({ text });
-  } catch (error) {
-    console.error("Gemini error:", error);
-
-    const errorMessage =
-      error instanceof Error ? error.message : "An unknown error occurred";
-
+  } catch (error: any) {
+    console.error("API ERROR:", error);
     return NextResponse.json(
-      { error: errorMessage },
+      { error: error.message },
       { status: 500 }
     );
   }
