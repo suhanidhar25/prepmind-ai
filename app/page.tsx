@@ -16,8 +16,6 @@ import {
   Sparkles,
   History,
   LayoutDashboard,
-  FileText,
-  BarChart3,
   Brain,
   Send,
 } from "lucide-react";
@@ -108,12 +106,6 @@ export default function Home() {
           >
             <History size={18} /> History
           </Link>
-          <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-400/10 text-zinc-300 transition-colors text-left">
-            <FileText size={18} /> New Summary
-          </button>
-          <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-400/10 text-zinc-300 transition-colors text-left">
-            <BarChart3 size={18} /> Analytics
-          </button>
         </nav>
 
         <div className="rounded-2xl border border-blue-200/20 bg-linear-to-br from-blue-500/10 to-cyan-400/5 p-4 backdrop-blur-sm">

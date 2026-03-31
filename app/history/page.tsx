@@ -13,8 +13,6 @@ import {
 import {
   History,
   LayoutDashboard,
-  FileText,
-  BarChart3,
   Brain,
   ArrowLeft,
   Trash2,
@@ -81,12 +79,6 @@ export default function HistoryPage() {
           </Link>
           <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-500/20 text-blue-300 font-semibold transition-colors text-left">
             <History size={18} /> History
-          </button>
-          <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-400/10 text-zinc-300 transition-colors text-left">
-            <FileText size={18} /> New Summary
-          </button>
-          <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-400/10 text-zinc-300 transition-colors text-left">
-            <BarChart3 size={18} /> Analytics
           </button>
         </nav>
 
