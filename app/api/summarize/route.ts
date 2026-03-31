@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
     const groq = new Groq({ apiKey });
 
     const completion = await groq.chat.completions.create({
-      model: "llama-3.1-8b-instant",
+      model: "llama3-8b-8192",
       messages: [
         {
           role: "user",
@@ -36,11 +36,12 @@ export async function POST(req: NextRequest) {
 
     const text = completion.choices[0].message.content || "";
 
-    await addDoc(collection(db, "summaries"), {
+    // async fire-and-forget save
+    addDoc(collection(db, "summaries"), {
       note,
       summary: text,
       createdAt: serverTimestamp(),
-    });
+    }).catch(console.error);
 
     return NextResponse.json({ text });
   } catch (error: any) {
