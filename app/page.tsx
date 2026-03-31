@@ -37,20 +37,24 @@ export default function Home() {
       
       if (!res.ok) {
         setOutput(data.error || "Failed to generate summary");
+        setLoading(false);
         return;
       }
 
       setOutput(data.text);
+      setLoading(false);
 
-      await addDoc(collection(db, "summaries"), {
+      // Save to database asynchronously without blocking
+      addDoc(collection(db, "summaries"), {
         note,
         summary: data.text,
         createdAt: new Date(),
+      }).catch((error) => {
+        console.error("Error saving to database:", error);
       });
     } catch (error) {
       console.error("Error:", error);
       setOutput("Something went wrong. Please try again.");
-    } finally {
       setLoading(false);
     }
   };
