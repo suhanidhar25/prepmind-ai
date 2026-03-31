@@ -118,8 +118,8 @@ export default function Home() {
 
           {/* Workspace */}
           <div className="grid xl:grid-cols-3 gap-6">
-            <div className="xl:col-span-3 rounded-3xl border border-blue-200/20 bg-linear-to-br from-blue-950/50 to-slate-900/50 backdrop-blur-md p-8 shadow-xl">
-              <div className="flex items-center gap-3 mb-5">
+            <div className="xl:col-span-3 rounded-3xl border border-blue-200/20 bg-linear-to-br from-blue-950/50 to-slate-900/50 backdrop-blur-md p-6 shadow-xl">
+              <div className="flex items-center gap-3 mb-4">
                 <div className="p-2 rounded-lg bg-blue-400/20">
                   <Sparkles size={20} className="text-blue-300" />
                 </div>
@@ -136,7 +136,7 @@ export default function Home() {
               <button
                 onClick={handleGenerate}
                 disabled={loading}
-                className="mt-6 w-full md:w-auto flex items-center justify-center gap-2 px-8 py-3 rounded-xl bg-linear-to-r from-blue-500 to-cyan-400 text-slate-950 font-semibold shadow-lg hover:shadow-xl hover:from-blue-400 hover:to-cyan-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="mt-4 w-full md:w-auto flex items-center justify-center gap-2 px-8 py-3 rounded-xl bg-linear-to-r from-blue-500 to-cyan-400 text-slate-950 font-semibold shadow-lg hover:shadow-xl hover:from-blue-400 hover:to-cyan-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
                 {loading ? (
                   <>
@@ -151,8 +151,8 @@ export default function Home() {
                 )}
               </button>
 
-              <div className="mt-8">
-                <p className="text-sm text-zinc-400 font-medium mb-3">Output</p>
+              <div className="mt-4">
+                <p className="text-sm text-zinc-400 font-medium mb-2">Output</p>
                 <div className="rounded-2xl border border-blue-200/20 bg-slate-800/30 p-6 min-h-64 max-h-96 overflow-y-auto whitespace-pre-wrap text-zinc-200 text-sm leading-relaxed">
                   {output || (
                     <span className="text-zinc-500">
