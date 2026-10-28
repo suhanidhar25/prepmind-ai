@@ -38,6 +38,10 @@ export default function Home() {
         body: JSON.stringify({ note }),
       });
 
+      if (!res.headers.get("content-type")?.includes("application/json")) {
+        throw new Error(`Summarization API returned an unexpected response (${res.status})`);
+      }
+
       const data: { summary?: string; error?: string } = await res.json();
 
       if (!res.ok) {
@@ -121,9 +125,6 @@ export default function Home() {
           {/* Header */}
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8 animate-fade-in">
             <div>
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight gradient-text mb-2">
-                Study Canvas
-              </h2>
               <p className="text-zinc-400 text-lg max-w-xl">
                 Transform your lecture notes into revision-ready summaries with AI-powered insights.
               </p>
