@@ -38,8 +38,7 @@ export default function Home() {
         body: JSON.stringify({ note }),
       });
 
-      const data = await res.json();
-
+      const data: { summary?: string; error?: string } = await res.json();
 
       if (!res.ok) {
         setOutput(data.error || "Failed to generate summary");
@@ -47,12 +46,17 @@ export default function Home() {
         return;
       }
 
-      setOutput(data.text);
+      if (typeof data.summary !== "string") {
+        throw new Error("Summarization API returned an invalid response");
+      }
+
+      const summary = data.summary;
+      setOutput(summary);
       setLoading(false);
 
       addDoc(collection(db, "summaries"), {
         note,
-        summary: data.text,
+        summary,
         createdAt: new Date(),
       }).catch((error) => {
         console.error("Error saving to database:", error);
