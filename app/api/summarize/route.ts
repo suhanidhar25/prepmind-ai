@@ -1,41 +1,49 @@
+
 import { NextRequest, NextResponse } from "next/server";
-import Groq from "groq-sdk";
+import { GoogleGenAI } from "@google/genai";
 
 export const runtime = "nodejs";
 
 export async function POST(req: NextRequest) {
   try {
-    const apiKey = process.env.GROQ_API_KEY;
+    const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
       return NextResponse.json(
-        { error: "Groq API key not configured" },
+        { error: "Gemini API key not configured" },
         { status: 500 }
       );
     }
 
-    const { note } = await req.json();
+    const body = await req.json();
+    const note = body.note;
 
-    const groq = new Groq({ apiKey });
+    if (typeof note !== "string" || !note.trim()) {
+      return NextResponse.json(
+        { error: "Please provide notes to summarize" },
+        { status: 400 }
+      );
+    }
 
-    const completion = await groq.chat.completions.create({
-      
-      model: "llama-3.1-8b-instant",
-      messages: [
-        {
-          role: "user",
-          content: `Summarize this in bullet points and add 5 viva questions:\n${note}`,
-        },
-      ],
+    const ai = new GoogleGenAI({ apiKey });
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: `Summarize the following notes in clear bullet points.
+Then generate 5 viva questions with short answers.
+
+Notes:
+${note}`,
     });
 
-    const text = completion.choices[0].message.content || "";
+    return NextResponse.json({
+      summary: response.text ?? "",
+    });
+  } catch (error) {
+    console.error("Summarization error:", error);
 
-    return NextResponse.json({ text });
-  } catch (error: any) {
-    console.error("API ERROR:", error);
     return NextResponse.json(
-      { error: error.message },
+      { error: "Failed to generate summary. Please try again." },
       { status: 500 }
     );
   }
